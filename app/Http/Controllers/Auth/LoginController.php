@@ -63,5 +63,14 @@ class LoginController extends Controller
             return redirect()->back()->with('error','Invalid Email or Password');
         }
 
+
+
+    }
+
+
+    // __ Admin Login Form __
+    public function adminLogin(){
+
+        return view('auth.admin_login');
     }
 }
