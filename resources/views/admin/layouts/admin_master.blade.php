@@ -34,10 +34,12 @@
    <link rel="stylesheet" href="{{ asset('backend') }}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
    <link rel="stylesheet" href="{{ asset('backend') }}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 
-   <link rel="stylesheet" href="{{ asset('backend') }}/toastr/toastr.min.css">
+   <!-- Toastr Notification --->
+   <link rel="stylesheet" href="{{ asset('backend') }}/plugins/toastr/toastr.min.css">
 
-   {{-- sweet alert  --}}
+      <!-- Sweet Alert --->
    <link rel="stylesheet" type="text/css" href="{{ asset('backend') }}/plugins/sweetalert2/sweetalert2.min.css">
+   <link rel="stylesheet" type="text/css" href="{{ asset('backend') }}/plugins/sweetalert/sweet-alert.css">
 
    @stack('css')
 </head>
@@ -52,23 +54,25 @@
   </div>
 
 
+
   @guest
 
-    @else
-        <!-- Navbar Start -->
-        @include('admin.layouts.admin_partial.topbar')
-        <!-- Navbar End -->
+  @else
+
+    <!-- Navbar Start -->
+    @include('admin.layouts.admin_partial.topbar')
+    <!-- Navbar End -->
 
 
-        <!-- Main Sidebar Container Start -->
-        @include('admin.layouts.admin_partial.sidebar')
-        <!-- Main Sidebar Container End -->
+    <!-- Main Sidebar Container Start -->
+    @include('admin.layouts.admin_partial.sidebar')
+    <!-- Main Sidebar Container End -->
 
   @endguest
 
-  @auth
 
-  @endauth
+
+
 
 
   <!-- Content Wrapper. Contains page content -->
@@ -134,12 +138,11 @@
 <script src="{{ asset('backend') }}/plugins/summernote/summernote-bs4.min.js"></script>
 
 <!-- Toastr --->
-<script src="{{ asset('backend') }}/toastr/toastr.min.js"></script>
+<script src="{{ asset('backend') }}/plugins/toastr/toastr.min.js"></script>
 
 <!-- sweet alert --->
-
-<script src="{{ asset('backend') }}/plugins/sweetalert2/sweetalert2.all.min.js
-"></script>
+<script src="{{ asset('backend') }}/plugins/sweetalert2/sweetalert2.all.min.js"></script>
+<script src="{{ asset('backend') }}/plugins/sweetalert/sweetalert.min.js"></script>
 
 {{-- {!! Toastr::message() !!} --}}
 {{-- <script>
@@ -180,6 +183,20 @@
     // Summernote
     $('#summernote').summernote([
 
+        placeholder: 'Hello Bootstrap 4',
+        tabsize: 2,
+        height: 100,
+        lang: 'ko-KR' // default: 'en-US'
+        toolbar: [
+          ['style', ['style']],
+          ['font', ['bold', 'underline', 'clear']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['table', ['table']],
+          ['insert', ['link', 'picture', 'video']],
+          ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+
     ]);
 
     // CodeMirror
@@ -191,91 +208,139 @@
   </script>
 
 
+    <!-- sweet alert js code -->
+
+     {{-- before  logout showing alert message --}}
+     <script>
+        $(document).on("click", "#logout", function(e){
+            e.preventDefault();
+            var link = $(this).attr("href");
+            Swal.fire({
+                    title: "Are You  Want To Logout?",
+                    text: "",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, Logout!",
+                    buttons:true,
+                    dangerMode:true,
+                   timer: 8000,
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                        window.location.href = link;
+                    }
+            else{
+                  Swal.fire("Not Logout");
+                }
+            });
+           });
+   </script>
+
+    <!-- Sweet alert added message Js Code --->
+
+    @if (Session::has('success'))
+    <script>
+            Swal.fire({
+            position: "top-center",
+            icon: "success",
+            title: "Category Added Successfully!!",
+            showConfirmButton: false,
+            timer: 1500
+            });
+    </script>
+    @endif
+
+    <!-- Sweet alert added message  Js Code --->
+
+
+
+    <!-- Sweet alert Delete message Js Code --->
+
 <script>
 
-    // @if (Session::has('message'))
 
-    // var type = "{{ Session::get('alert-type', 'info') }}"
-    // switch (type) {
-    //     case 'info':
+    // $(document).on("click", "#delete", function(e){
+    //     e.preventDefault();
+    //     var link = $(this).attr("href");
+    //        swal({
+    //          title: "Are you Want to delete?",
+    //          text: "Once Delete, This will be Permanently Delete!",
+    //          icon: "warning",
+    //          buttons: true,
+    //          dangerMode: true,
+    //        })
+    //        .then((willDelete) => {
+    //          if (willDelete) {
+    //               window.location.href = link;
+    //          } else {
+    //            swal("Safe Data!");
+    //          }
+    //        });
+    //    });
 
-    //         toastr.options.timeOut = 10000;
-    //         toastr.info("{{ Session::get('message') }}");
-    //         var audio = new Audio('audio.mp3');
-    //         audio.play();
-    //         break;
-    //     case 'success':
-
-    //         toastr.options.timeOut = 10000;
-    //         toastr.success("{{ Session::get('message') }}");
-    //         var audio = new Audio('audio.mp3');
-    //         audio.play();
-
-    //         break;
-    //     case 'warning':
-
-    //         toastr.options.timeOut = 10000;
-    //         toastr.warning("{{ Session::get('message') }}");
-    //         var audio = new Audio('audio.mp3');
-    //         audio.play();
-
-    //         break;
-    //     case 'error':
-
-    //         toastr.options.timeOut = 10000;
-    //         toastr.error("{{ Session::get('message') }}");
-    //         var audio = new Audio('audio.mp3');
-    //         audio.play();
-
-    //         break;
-    // }
+    $(document).on("click", "#delete", function(e){
+            e.preventDefault();
+            var link = $(this).attr("href");
+            Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!"
+                })
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                        title: "Deleted!",
+                        text: "Your file has been deleted.",
+                        icon: "success"
+                        });
+                        window.location.href = link;
+                    }
+            });
+    });
 
 
-
-    // @endif
 </script>
 
+    <!-- Sweet alert Delete message Js Code --->
+
+
+    <!-- Toastr Notification Js Code --->
 
     <script>
         @if (Session::has('message'))
-            //  Toastr.success("{{ Session('message') }}");
-            toastr.options =
-        {
-            "closeButton" : true,
-            "progressBar" : true
-        }
-             toastr.warning("{{ session('message') }}");
+        var type = "{{ Session::get('alert-type','info') }}";
+
+            switch(type){
+                case 'info':
+                //  toastr.options.timeOut = 10000;
+                toastr.info("{{ Session::get('message') }}");
+                break;
+
+                case 'success':
+                toastr.success("{{ Session::get('message') }}");
+                break;
+
+                case 'warning':
+                toastr.warning("{{ Session::get('message') }}");
+                break;
+
+                case 'error':
+                toastr.error("{{ Session::get('message') }}");
+                break;
+            }
 
         @endif
     </script>
 
-    <!-- sweet alert js code -->
 
-    @if (Session::has('delete'))
-    <script>
-        //  swal.fire('Congratulations',"{!! Session::get('delete') !!}","error",{
-        //     button:'ok'
-        // });
+{{-- Sweet Alert Pop Message Box --}}
 
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-            }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire({
-                title: "Deleted!",
-                text: "Your file has been deleted.",
-                icon: "success"
-                });
-            }
-            });
-    </script>
-    @endif
 
 
   @stack('script')

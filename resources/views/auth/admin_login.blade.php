@@ -59,7 +59,7 @@
               <a href="{{ route('password.request') }}">I forgot my password</a>
             </p>
           </div>
-          <!-- /.card-body -->f
+          <!-- /.card-body -->
         </div>
         <!-- /.card -->
       </div>

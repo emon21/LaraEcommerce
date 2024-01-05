@@ -37,10 +37,7 @@
           <li class="nav-item menu-open">
             <a href="{{ route('admin.home') }}" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Dashboard
-
-              </p>
+              <p> Dashboard </p>
             </a>
 
           </li>
@@ -49,20 +46,21 @@
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-copy"></i>
               <p>
-                Categories
+                Manage Categories
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
+            <li class="nav-item">
+                <a href="{{ route('category.index') }}" class="nav-link">
+                    <i class="nav-icon fas fa-copy"></i>
+                  <p>Manage Categories</p>
+                </a>
+              </li>
 
             <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="#" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Add Categories</p>
-                  </a>
-                </li>
+
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ route('category.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>All Categories</p>
                 </a>
@@ -126,12 +124,11 @@
             </li>
 
             <li class="nav-item">
-                <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
-                document.getElementById('logout-form').submit();">
+                <a href="{{ route('admin.logout') }}" class="nav-link" id="logout">
                   <i class="nav-icon far fa-circle text-warning"></i>
                   <p>{{ __('Logout') }}</p>
                 </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="d-none">
                     @csrf
                 </form>
               </li>
