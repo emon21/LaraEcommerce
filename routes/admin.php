@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\admin\CategoryController;
+use App\Http\Controllers\admin\SubCategoryController;
+use App\Models\Admin\SubCategory;
 use Illuminate\Support\Facades\Route;
 
 
@@ -39,5 +41,23 @@ Route::group(['namespace'=>'App\Http\Controllers\admin','middleware' => 'is_admi
 
     });
 
+    // ---- Sub Category CRUD ---- //
+
+    Route::group(['prefix'=>'subcategory'],function (){
+
+        //____ Category Crud ____ //
+
+        Route::get('/index','SubCategoryController@index')->name('subcategory.index');
+
+        Route::post('/store',[SubCategoryController::class,'store'])->name('subcategory.store');
+
+        Route::get('/edit/{id}',[SubCategoryController::class,'edit']);
+
+        Route::post('/update',[SubCategoryController::class,'update'])->name('subcategory.update');
+
+        Route::get('/delete/{subcategory}',[SubCategoryController::class,'destroy'])->name('subcategory.delete');
+
+
+    });
 
 });

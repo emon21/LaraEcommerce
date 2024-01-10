@@ -60,9 +60,6 @@ class CategoryController extends Controller
             'category_slug' => Str::slug($request->category_name,'-')
         ]);
 
-
-
-
         return redirect()->back()->with('success','Category Added Successfully !!');
 
     }
